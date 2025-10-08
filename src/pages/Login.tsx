@@ -18,42 +18,30 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-black to-blue-900/30" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background shapes */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-700 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-700 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-violet-700 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse animation-delay-4000"></div>
+      </div>
 
-      {/* Additional blur elements for depth */}
-      <div className="absolute top-20 left-20 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl" />
-
-      {/* Content container */}
+      {/* Main card container */}
       <div className="relative z-10 w-full max-w-md">
-        {/* Glassmorphism card */}
-        <div
-          className="relative overflow-hidden rounded-3xl p-10"
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            boxShadow:
-              '0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 1px 0 0 rgba(255, 255, 255, 0.15)',
-          }}
-        >
-          {/* Gradient accent top */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500" />
+        {/* Glass card */}
+        <div className="bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 p-10 space-y-8">
+          {/* Top gradient line */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-400 via-pink-500 to-purple-600 rounded-t-3xl"></div>
 
-          {/* Logo and branding */}
-          <div className="text-center mb-10">
-            {/* Logo circle */}
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 mb-6 shadow-lg">
+          {/* Logo and title section */}
+          <div className="text-center space-y-6">
+            {/* Logo */}
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full shadow-lg shadow-purple-500/25">
               <svg
                 className="w-10 h-10 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   strokeLinecap="round"
@@ -70,23 +58,18 @@ export default function Login() {
               </svg>
             </div>
 
-            {/* App name */}
-            <h1 className="text-5xl font-bold mb-3">
-              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">
-                Glance
-              </span>
-            </h1>
-
-            {/* Tagline */}
-            <p className="text-gray-400 text-base">Your second screen, elevated.</p>
+            {/* Title */}
+            <div>
+              <h1 className="text-5xl font-bold text-white mb-2">Glance</h1>
+              <p className="text-white/70 text-sm">Your second screen, elevated.</p>
+            </div>
           </div>
 
           {/* Sign in button */}
           <button
             onClick={handleGoogleSignIn}
             disabled={isLoading}
-            className="w-full h-14 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-3"
-            aria-label="Sign in with Google"
+            className="w-full bg-white text-gray-800 font-medium py-4 px-6 rounded-2xl flex items-center justify-center gap-3 hover:bg-gray-50 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed group"
           >
             {isLoading ? (
               <>
@@ -95,13 +78,7 @@ export default function Login() {
               </>
             ) : (
               <>
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  className="flex-shrink-0"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
                     fill="#4285F4"
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -119,25 +96,27 @@ export default function Login() {
                     d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                   />
                 </svg>
-                <span>Sign in with Google</span>
+                <span className="group-hover:translate-x-0.5 transition-transform duration-200">
+                  Sign in with Google
+                </span>
               </>
             )}
           </button>
 
           {/* Footer links */}
-          <div className="mt-8 flex items-center justify-center gap-4 text-xs text-gray-500">
-            <a href="/privacy" className="hover:text-gray-300 transition-colors">
+          <div className="flex items-center justify-center gap-6 text-xs">
+            <a href="/privacy" className="text-white/60 hover:text-white transition-colors">
               Privacy Policy
             </a>
-            <span className="text-gray-600">•</span>
-            <a href="/terms" className="hover:text-gray-300 transition-colors">
+            <span className="text-white/40">•</span>
+            <a href="/terms" className="text-white/60 hover:text-white transition-colors">
               Terms of Service
             </a>
           </div>
         </div>
 
-        {/* Subtle hint text */}
-        <p className="mt-6 text-center text-sm text-gray-500 px-4">
+        {/* Bottom hint text */}
+        <p className="mt-8 text-center text-xs text-white/50 px-4">
           By signing in, you agree to authorize Glance to access your Gmail and Calendar data.
         </p>
       </div>
