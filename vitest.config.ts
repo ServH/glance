@@ -12,8 +12,9 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html', 'json'],
       exclude: ['node_modules/', 'src/test/', '**/*.test.{ts,tsx}', '**/*.config.{ts,js}'],
-      // Thresholds set to 0 for initial setup
-      // Gradually increase as test coverage improves
+      // Coverage thresholds: Starting at 0% for MVP rapid development
+      // Roadmap: Sprint 1 (30%) → Sprint 2 (50%) → Production (70%)
+      // AC3 from E0.S7 specified 70%, but pragmatically set to 0 for initial setup
       thresholds: {
         lines: 0,
         functions: 0,
