@@ -1,13 +1,17 @@
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useWidgetConfig } from '@/contexts/WidgetConfigContext';
 import { Mail, Calendar, ArrowRight, Power } from 'lucide-react';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { useTimeOfDay } from '@/hooks/useTimeOfDay';
+import { useEffect } from 'react';
 import '../styles/settings.css';
 
 export default function Settings() {
   const navigate = useNavigate();
   const { config, updateWidgetConfig, resetConfig } = useWidgetConfig();
   const { logout } = useAuthContext();
+  const { colors } = useTimeOfDay();
 
   const handleGmailToggle = () => {
     updateWidgetConfig('gmail', { enabled: !config.gmail.enabled });
@@ -30,15 +34,57 @@ export default function Settings() {
     }
   };
 
+  // Apply dynamic CSS variables for colors
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--orb-1-color', colors.orb1);
+    root.style.setProperty('--orb-2-color', colors.orb2);
+  }, [colors]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: 'spring' as const,
+        stiffness: 300,
+        damping: 24,
+      },
+    },
+  };
+
   return (
-    <div className="settings-container">
+    <motion.div
+      className="settings-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      style={{ background: colors.gradient }}
+    >
       {/* Animated blur orbs (matching login aesthetics) */}
       <div className="settings-orb settings-orb-1" />
       <div className="settings-orb settings-orb-2" />
 
-      <div className="settings-content">
+      <motion.div
+        className="settings-content"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Header */}
-        <header className="settings-header">
+        <motion.header className="settings-header" variants={itemVariants}>
           <div>
             <h1 className="settings-title">Configure Your Widgets</h1>
             <p className="settings-subtitle">
@@ -46,19 +92,30 @@ export default function Settings() {
             </p>
           </div>
 
-          <button onClick={handleLogout} className="settings-logout-btn" aria-label="Logout">
+          <motion.button
+            onClick={handleLogout}
+            className="settings-logout-btn"
+            aria-label="Logout"
+            whileHover={{ scale: 1.05, rotate: 90 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
             <Power size={20} />
-          </button>
-        </header>
+          </motion.button>
+        </motion.header>
 
         {/* Widget Cards */}
         <div className="settings-widgets">
           {/* Gmail Widget */}
-          <div className="widget-card">
+          <motion.div className="widget-card" variants={itemVariants} whileHover={{ y: -5 }}>
             <div className="widget-card-header">
-              <div className="widget-card-icon-wrapper">
+              <motion.div
+                className="widget-card-icon-wrapper"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
                 <Mail className="widget-card-icon" size={28} />
-              </div>
+              </motion.div>
               <div className="widget-card-info">
                 <h3 className="widget-card-title">Gmail</h3>
                 <p className="widget-card-description">
@@ -78,14 +135,18 @@ export default function Settings() {
                 <span className="toggle-slider" />
               </label>
             </div>
-          </div>
+          </motion.div>
 
           {/* Calendar Widget */}
-          <div className="widget-card">
+          <motion.div className="widget-card" variants={itemVariants} whileHover={{ y: -5 }}>
             <div className="widget-card-header">
-              <div className="widget-card-icon-wrapper">
+              <motion.div
+                className="widget-card-icon-wrapper"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+              >
                 <Calendar className="widget-card-icon" size={28} />
-              </div>
+              </motion.div>
               <div className="widget-card-info">
                 <h3 className="widget-card-title">Calendar</h3>
                 <p className="widget-card-description">
@@ -107,21 +168,33 @@ export default function Settings() {
                 <span className="toggle-slider" />
               </label>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Actions */}
-        <div className="settings-actions">
-          <button onClick={resetConfig} className="settings-btn settings-btn-secondary">
+        <motion.div className="settings-actions" variants={itemVariants}>
+          <motion.button
+            onClick={resetConfig}
+            className="settings-btn settings-btn-secondary"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
             Reset to Defaults
-          </button>
+          </motion.button>
 
-          <button onClick={handleGoToClockScreen} className="settings-btn settings-btn-primary">
+          <motion.button
+            onClick={handleGoToClockScreen}
+            className="settings-btn settings-btn-primary"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+          >
             Go to Clock Screen
             <ArrowRight size={20} />
-          </button>
-        </div>
-      </div>
-    </div>
+          </motion.button>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 }

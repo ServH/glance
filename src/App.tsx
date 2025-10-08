@@ -5,6 +5,7 @@ import { WidgetConfigProvider } from '@/contexts/WidgetConfigContext';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { PublicRoute } from '@/components/auth/PublicRoute';
+import { CommandPalette } from '@/components/CommandPalette';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import ClockScreen from './pages/ClockScreen';
@@ -23,6 +24,7 @@ function App() {
       <AuthProvider>
         <WidgetConfigProvider>
           <BrowserRouter>
+            <CommandPalette />
             <Routes>
               {/* Landing page - public */}
               <Route path="/" element={<Landing />} />

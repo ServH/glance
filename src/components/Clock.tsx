@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 interface ClockProps {
   size?: 'small' | 'medium' | 'large' | 'hero';
@@ -7,6 +8,7 @@ interface ClockProps {
 
 /**
  * Digital clock component with real-time updates
+ * 3D depth effect and premium animations
  */
 export function Clock({ size = 'large', showDate = true }: ClockProps) {
   const [time, setTime] = useState(new Date());
@@ -48,9 +50,64 @@ export function Clock({ size = 'large', showDate = true }: ClockProps) {
   });
 
   return (
-    <div className="clock-display">
-      <div className={`clock-time ${sizeClasses[size]}`}>{timeString}</div>
-      {showDate && <div className={`clock-date ${dateSizeClasses[size]}`}>{dateString}</div>}
-    </div>
+    <motion.div
+      className="clock-display"
+      style={{
+        perspective: '1000px',
+        transformStyle: 'preserve-3d',
+      }}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+    >
+      <motion.div
+        className={`clock-time ${sizeClasses[size]}`}
+        style={{
+          transform: 'translateZ(30px)',
+        }}
+        animate={{
+          textShadow: [
+            '0 0 20px rgba(255, 255, 255, 0.3)',
+            '0 0 40px rgba(255, 255, 255, 0.4)',
+            '0 0 20px rgba(255, 255, 255, 0.3)',
+          ],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+      >
+        {timeString.split('').map((char, index) => (
+          <motion.span
+            key={`${char}-${index}`}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: index * 0.05,
+              type: 'spring',
+              stiffness: 200,
+              damping: 10,
+            }}
+            style={{ display: 'inline-block' }}
+          >
+            {char}
+          </motion.span>
+        ))}
+      </motion.div>
+      {showDate && (
+        <motion.div
+          className={`clock-date ${dateSizeClasses[size]}`}
+          style={{
+            transform: 'translateZ(15px)',
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          {dateString}
+        </motion.div>
+      )}
+    </motion.div>
   );
 }
