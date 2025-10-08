@@ -1,0 +1,22 @@
+/* Settings Page */
+.settings-page {
+  min-height: 100vh;
+  background: #0a0a0a;
+}
+
+.settings-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.settings-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.settings-subtitle {
+  color: rgba(255, 255, 255, 0.6);
+}
