@@ -1,4 +1,5 @@
 import { DashboardHeader } from '@/components/layout/DashboardHeader';
+import { GmailWidget } from '@/components/widgets/GmailWidget';
 import { useAuthContext } from '@/contexts/AuthContext';
 import '../styles/dashboard.css';
 
@@ -17,18 +18,14 @@ export default function Dashboard() {
             Welcome back, {user?.displayName?.split(' ')[0] || 'User'}!
           </h1>
 
-          <p className="dashboard-subtitle">
-            Your personalized dashboard is coming soon. Widgets for Gmail and Calendar will be
-            implemented in the next epics.
-          </p>
+          <p className="dashboard-subtitle">Your personalized second screen dashboard</p>
 
-          {/* Placeholder widget grid */}
+          {/* Widget grid */}
           <div className="widget-grid">
-            <div className="widget-placeholder">
-              <p className="widget-placeholder-text">Gmail Widget</p>
-              <p className="widget-placeholder-subtitle">Epic 2</p>
-            </div>
+            {/* Gmail Widget - E2.S2 */}
+            <GmailWidget />
 
+            {/* Placeholder widgets */}
             <div className="widget-placeholder">
               <p className="widget-placeholder-text">Calendar Widget</p>
               <p className="widget-placeholder-subtitle">Epic 5</p>
