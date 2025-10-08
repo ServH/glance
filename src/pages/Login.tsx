@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 
@@ -8,6 +8,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { loginWithGoogle } = useAuthContext();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
@@ -16,9 +17,12 @@ export default function Login() {
     try {
       await loginWithGoogle();
 
-      // Redirect to dashboard on success
-      console.log('✅ Login successful, redirecting to dashboard');
-      navigate('/dashboard');
+      // Redirect to the page user was trying to access
+      // Or default to dashboard
+      const from =
+        (location.state as { from?: { pathname?: string } })?.from?.pathname || '/dashboard';
+      console.log('✅ Login successful, redirecting to:', from);
+      navigate(from, { replace: true });
     } catch (error) {
       console.error('❌ Login failed:', error);
       const errorMsg =

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import type { User, UserCredential } from 'firebase/auth';
 import { useAuth } from '@/hooks/useAuth';
 
-interface AuthContextType {
+export interface AuthContextType {
   user: User | null;
   loading: boolean;
   error: Error | null;
@@ -12,7 +12,7 @@ interface AuthContextType {
   getAccessToken: () => Promise<string | null>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 /**
  * Auth Context Provider
