@@ -26,6 +26,7 @@ export function useAuth(): UseAuthReturn {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [googleAccessToken, setGoogleAccessToken] = useState<string | null>(null);
 
   // Subscribe to auth state changes
   useEffect(() => {
@@ -78,6 +79,13 @@ export function useAuth(): UseAuthReturn {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const accessToken = credential?.accessToken;
 
+      // Store Google OAuth access token for API calls
+      if (accessToken) {
+        setGoogleAccessToken(accessToken);
+        // Also store in sessionStorage for persistence across page reloads
+        sessionStorage.setItem('google_access_token', accessToken);
+      }
+
       console.log('✅ Login successful:', {
         email: result.user.email,
         uid: result.user.uid,
@@ -111,6 +119,9 @@ export function useAuth(): UseAuthReturn {
       await firebaseSignOut(auth);
       setUser(null);
       setError(null);
+      setGoogleAccessToken(null);
+      // Clear stored token
+      sessionStorage.removeItem('google_access_token');
 
       console.log('✅ Logout successful');
     } catch (error) {
@@ -120,8 +131,8 @@ export function useAuth(): UseAuthReturn {
   };
 
   /**
-   * Get current Firebase ID token for API authentication
-   * Token is automatically refreshed by Firebase if expired
+   * Get Google OAuth access token for API authentication
+   * This is the token needed for Gmail API, not Firebase ID token
    */
   const getAccessToken = async (): Promise<string | null> => {
     if (!user) {
@@ -129,14 +140,22 @@ export function useAuth(): UseAuthReturn {
       return null;
     }
 
-    try {
-      const token = await user.getIdToken(/* forceRefresh */ false);
-      console.log('🔑 Access token retrieved');
-      return token;
-    } catch (error) {
-      console.error('Failed to get access token:', error);
-      return null;
+    // Try to get from state first
+    if (googleAccessToken) {
+      console.log('🔑 Access token retrieved from state');
+      return googleAccessToken;
     }
+
+    // Fall back to sessionStorage
+    const storedToken = sessionStorage.getItem('google_access_token');
+    if (storedToken) {
+      console.log('🔑 Access token retrieved from sessionStorage');
+      setGoogleAccessToken(storedToken);
+      return storedToken;
+    }
+
+    console.warn('⚠️ No Google access token available. User may need to re-authenticate.');
+    return null;
   };
 
   return {
