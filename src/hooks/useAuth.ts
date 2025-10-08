@@ -93,7 +93,7 @@ export function useAuth(): UseAuthReturn {
       console.error('❌ Login error:', error);
 
       // Handle and transform error
-      const authError = handleAuthError(error);
+      const authError = handleAuthError(error as { code?: string; message?: string });
       setError(authError);
 
       throw authError;

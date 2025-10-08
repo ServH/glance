@@ -2,16 +2,16 @@
  * Firebase Auth error codes
  * https://firebase.google.com/docs/reference/js/auth#autherrorcodes
  */
-export enum AuthErrorCode {
-  POPUP_CLOSED = 'auth/popup-closed-by-user',
-  POPUP_BLOCKED = 'auth/popup-blocked',
-  UNAUTHORIZED_DOMAIN = 'auth/unauthorized-domain',
-  NETWORK_ERROR = 'auth/network-request-failed',
-  USER_DISABLED = 'auth/user-disabled',
-  INVALID_CREDENTIAL = 'auth/invalid-credential',
-  OPERATION_NOT_ALLOWED = 'auth/operation-not-allowed',
-  TOO_MANY_REQUESTS = 'auth/too-many-requests',
-}
+export const AuthErrorCode = {
+  POPUP_CLOSED: 'auth/popup-closed-by-user',
+  POPUP_BLOCKED: 'auth/popup-blocked',
+  UNAUTHORIZED_DOMAIN: 'auth/unauthorized-domain',
+  NETWORK_ERROR: 'auth/network-request-failed',
+  USER_DISABLED: 'auth/user-disabled',
+  INVALID_CREDENTIAL: 'auth/invalid-credential',
+  OPERATION_NOT_ALLOWED: 'auth/operation-not-allowed',
+  TOO_MANY_REQUESTS: 'auth/too-many-requests',
+} as const;
 
 /**
  * Transform Firebase auth errors into user-friendly messages
