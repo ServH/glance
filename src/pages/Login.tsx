@@ -1,18 +1,30 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { loginWithGoogle } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
+
     try {
-      // OAuth flow will be implemented in E1.S4
-      console.log('Google sign-in clicked');
-      // TODO: Implement signInWithPopup in E1.S4
-      setTimeout(() => setIsLoading(false), 2000); // Simulate loading
+      await loginWithGoogle();
+
+      // Redirect to dashboard on success
+      console.log('✅ Login successful, redirecting to dashboard');
+      navigate('/dashboard');
     } catch (error) {
-      console.error('Sign-in error:', error);
+      console.error('❌ Login failed:', error);
+      const errorMsg =
+        error instanceof Error ? error.message : 'Failed to sign in. Please try again.';
+      setErrorMessage(errorMsg);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -202,6 +214,25 @@ export default function Login() {
               </>
             )}
           </button>
+
+          {/* Error message */}
+          {errorMessage && (
+            <div
+              role="alert"
+              style={{
+                marginBottom: '1.5rem',
+                padding: '0.75rem 1rem',
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                borderRadius: '0.5rem',
+                color: '#FCA5A5',
+                fontSize: '0.875rem',
+                textAlign: 'center',
+              }}
+            >
+              {errorMessage}
+            </div>
+          )}
 
           {/* Footer links */}
           <div

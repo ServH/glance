@@ -1,48 +1,38 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
-import type { User } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { createContext, useContext, ReactNode } from 'react';
+import { User, UserCredential } from 'firebase/auth';
+import { useAuth } from '@/hooks/useAuth';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  error: Error | null;
+  loginWithGoogle: () => Promise<UserCredential>;
+  logout: () => Promise<void>;
+  getAccessToken: () => Promise<string | null>;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  loading: true,
-});
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
+/**
+ * Auth Context Provider
+ * Wraps app to provide authentication state globally
+ */
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const auth = useAuth();
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+}
+
+/**
+ * Hook to access auth context
+ * Must be used within AuthProvider
+ */
+export function useAuthContext(): AuthContextType {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+
+  if (context === undefined) {
+    throw new Error('useAuthContext must be used within AuthProvider');
   }
+
   return context;
-};
-
-interface AuthProviderProps {
-  children: ReactNode;
 }
-
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const value = {
-    user,
-    loading,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
