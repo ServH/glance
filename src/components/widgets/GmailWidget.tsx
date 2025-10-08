@@ -1,4 +1,5 @@
 import { useGmail } from '@/hooks/useGmail';
+import { useWidgetConfig } from '@/contexts/WidgetConfigContext';
 import { EmailRow } from './EmailRow';
 import { EmptyState } from './EmptyState';
 import { ErrorState } from './ErrorState';
@@ -13,9 +14,10 @@ import '../../styles/gmail-widget.css';
  * Supports manual refresh and polling
  */
 export function GmailWidget() {
+  const { config } = useWidgetConfig();
   const { emails, isLoading, error, refetch } = useGmail({
-    enabled: true,
-    refetchInterval: 60000, // 60 seconds
+    enabled: config.gmail.enabled,
+    refetchInterval: (config.gmail.pollingInterval || 60) * 1000,
   });
 
   const handleRefresh = () => {
