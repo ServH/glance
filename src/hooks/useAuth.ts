@@ -60,10 +60,10 @@ export function useAuth(): UseAuthReturn {
 
     const provider = new GoogleAuthProvider();
 
-    // TODO: Re-enable Gmail and Calendar scopes after Google OAuth verification
-    // For now, only use basic scopes (email, profile) which don't require verification
-    // provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
-    // provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
+    // Request Gmail and Calendar readonly scopes for Epic 2 & 5
+    // Note: App in "Testing" mode - users will see "unverified app" warning until OAuth verification complete
+    provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
+    provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
 
     // Custom OAuth parameters
     provider.setCustomParameters({
