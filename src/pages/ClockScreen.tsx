@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Clock } from '@/components/Clock';
 import { NotificationBadge } from '@/components/widgets/NotificationBadge';
+import { ParticleBackground } from '@/components/ParticleBackground';
 import { useGmail } from '@/hooks/useGmail';
 import { useWidgetConfig } from '@/contexts/WidgetConfigContext';
 import { useTimeOfDay } from '@/hooks/useTimeOfDay';
@@ -52,6 +53,9 @@ export default function ClockScreen() {
       transition={{ duration: 0.6 }}
       style={{ background: colors.gradient }}
     >
+      {/* Particle background */}
+      <ParticleBackground />
+
       {/* Settings button */}
       <motion.button
         className="clock-settings-btn"

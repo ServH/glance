@@ -65,35 +65,8 @@ export function Clock({ size = 'large', showDate = true }: ClockProps) {
         style={{
           transform: 'translateZ(30px)',
         }}
-        animate={{
-          textShadow: [
-            '0 0 20px rgba(255, 255, 255, 0.3)',
-            '0 0 40px rgba(255, 255, 255, 0.4)',
-            '0 0 20px rgba(255, 255, 255, 0.3)',
-          ],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
       >
-        {timeString.split('').map((char, index) => (
-          <motion.span
-            key={`${char}-${index}`}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: index * 0.05,
-              type: 'spring',
-              stiffness: 200,
-              damping: 10,
-            }}
-            style={{ display: 'inline-block' }}
-          >
-            {char}
-          </motion.span>
-        ))}
+        {timeString}
       </motion.div>
       {showDate && (
         <motion.div
@@ -103,7 +76,7 @@ export function Clock({ size = 'large', showDate = true }: ClockProps) {
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
         >
           {dateString}
         </motion.div>
