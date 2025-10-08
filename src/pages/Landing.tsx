@@ -8,7 +8,7 @@ export default function Landing() {
         Glance
       </h1>
       <p className="text-xl text-text-secondary mb-8">Your intelligent email companion</p>
-      <Link to="/dashboard">
+      <Link to="/login">
         <Button size="lg">Get Started</Button>
       </Link>
     </div>
