@@ -60,14 +60,14 @@ export function useAuth(): UseAuthReturn {
 
     const provider = new GoogleAuthProvider();
 
-    // Request specific OAuth scopes
-    provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
-    provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
+    // TODO: Re-enable Gmail and Calendar scopes after Google OAuth verification
+    // For now, only use basic scopes (email, profile) which don't require verification
+    // provider.addScope('https://www.googleapis.com/auth/gmail.readonly');
+    // provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
 
     // Custom OAuth parameters
     provider.setCustomParameters({
       prompt: 'select_account', // Always show account picker
-      access_type: 'offline', // Request refresh token
     });
 
     try {
