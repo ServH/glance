@@ -21,11 +21,11 @@ export function PublicRoute({ children }: PublicRouteProps) {
     return null;
   }
 
-  // Redirect to dashboard if already authenticated
+  // Redirect to settings if already authenticated
   // Check if there's a saved location to redirect to
   if (user) {
     const from =
-      (location.state as { from?: { pathname?: string } })?.from?.pathname || '/dashboard';
+      (location.state as { from?: { pathname?: string } })?.from?.pathname || '/settings';
     return <Navigate to={from} replace />;
   }
 
