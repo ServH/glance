@@ -19,89 +19,52 @@ export default function Login() {
 
   return (
     <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
       style={{
-        minHeight: '100vh',
         background: 'linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #16213e 100%)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1rem',
-        position: 'relative',
-        overflow: 'hidden',
       }}
     >
       {/* Background blur effects */}
       <div
+        className="absolute top-[-10rem] right-[-10rem] w-80 h-80 opacity-30"
         style={{
-          position: 'absolute',
-          top: '-10rem',
-          right: '-10rem',
-          width: '20rem',
-          height: '20rem',
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%)',
           filter: 'blur(60px)',
-          borderRadius: '50%',
         }}
       />
       <div
+        className="absolute bottom-[-10rem] left-[-10rem] w-80 h-80 opacity-30"
         style={{
-          position: 'absolute',
-          bottom: '-10rem',
-          left: '-10rem',
-          width: '20rem',
-          height: '20rem',
-          background: 'radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(236, 72, 153, 0.5) 0%, transparent 70%)',
           filter: 'blur(60px)',
-          borderRadius: '50%',
         }}
       />
 
       {/* Main card container */}
-      <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '28rem' }}>
-        {/* Glassmorphism card */}
+      <div className="relative z-10 w-full max-w-md">
+        {/* Glassmorphism card - using inline styles for backdrop-filter */}
         <div
+          className="rounded-3xl p-10 relative"
           style={{
-            background: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
-            borderRadius: '1.5rem',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            padding: '3rem',
+            background: 'rgba(255, 255, 255, 0.08)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.18)',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)',
-            position: 'relative',
           }}
         >
-          {/* Top gradient accent */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '3px',
-              background: 'linear-gradient(90deg, #8b5cf6 0%, #ec4899 50%, #6366f1 100%)',
-              borderRadius: '1.5rem 1.5rem 0 0',
-            }}
-          />
-
           {/* Logo and title section */}
-          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <div className="text-center mb-8">
             {/* Logo */}
             <div
+              className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6"
               style={{
-                width: '5rem',
-                height: '5rem',
                 background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
-                borderRadius: '50%',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '1.5rem',
                 boxShadow: '0 10px 30px rgba(139, 92, 246, 0.3)',
               }}
             >
               <svg
-                style={{ width: '2.5rem', height: '2.5rem', color: 'white' }}
+                className="w-10 h-10 text-white"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -123,72 +86,36 @@ export default function Login() {
 
             {/* Title */}
             <h1
+              className="text-5xl font-bold mb-2"
               style={{
-                fontSize: '3rem',
-                fontWeight: 'bold',
                 background: 'linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
-                marginBottom: '0.5rem',
               }}
             >
               Glance
             </h1>
-            <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem' }}>
-              Your second screen, elevated.
-            </p>
+            <p className="text-white/70 text-sm">Your second screen, elevated.</p>
           </div>
 
           {/* Sign in button */}
           <button
             onClick={handleGoogleSignIn}
             disabled={isLoading}
-            style={{
-              width: '100%',
-              padding: '1rem',
-              background: 'white',
-              color: '#374151',
-              borderRadius: '1rem',
-              border: 'none',
-              fontSize: '1rem',
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.75rem',
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              opacity: isLoading ? 0.5 : 1,
-              transition: 'all 0.2s ease',
-              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-              marginBottom: '2rem',
-            }}
-            onMouseEnter={e => {
-              if (!isLoading) {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.15)';
-              }
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-            }}
+            className="w-full bg-white text-gray-800 font-medium py-4 px-6 rounded-2xl flex items-center justify-center gap-3
+              transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed
+              hover:-translate-y-0.5 group"
           >
             {isLoading ? (
               <>
-                <Loader2
-                  style={{
-                    width: '1.25rem',
-                    height: '1.25rem',
-                    animation: 'spin 1s linear infinite',
-                  }}
-                />
+                <Loader2 className="h-5 w-5 animate-spin" />
                 <span>Signing in...</span>
               </>
             ) : (
               <>
                 <svg
-                  style={{ width: '1.25rem', height: '1.25rem' }}
+                  className="w-5 h-5 flex-shrink-0"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -211,70 +138,30 @@ export default function Login() {
                     />
                   </g>
                 </svg>
-                <span>Sign in with Google</span>
+                <span className="group-hover:translate-x-0.5 transition-transform duration-200">
+                  Sign in with Google
+                </span>
               </>
             )}
           </button>
 
           {/* Footer links */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '1.5rem',
-              fontSize: '0.85rem',
-            }}
-          >
-            <a
-              href="/privacy"
-              style={{ color: 'rgba(255, 255, 255, 0.6)', textDecoration: 'none' }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
-              }}
-            >
+          <div className="mt-8 flex items-center justify-center gap-6 text-xs">
+            <a href="/privacy" className="text-white/60 hover:text-white transition-colors">
               Privacy Policy
             </a>
-            <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>•</span>
-            <a
-              href="/terms"
-              style={{ color: 'rgba(255, 255, 255, 0.6)', textDecoration: 'none' }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.9)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)';
-              }}
-            >
+            <span className="text-white/40">•</span>
+            <a href="/terms" className="text-white/60 hover:text-white transition-colors">
               Terms of Service
             </a>
           </div>
         </div>
 
         {/* Bottom hint text */}
-        <p
-          style={{
-            marginTop: '2rem',
-            textAlign: 'center',
-            fontSize: '0.75rem',
-            color: 'rgba(255, 255, 255, 0.5)',
-            padding: '0 1rem',
-          }}
-        >
+        <p className="mt-8 text-center text-xs text-white/50 px-4">
           By signing in, you agree to authorize Glance to access your Gmail and Calendar data.
         </p>
       </div>
-
-      {/* Add keyframes for spin animation */}
-      <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 }
