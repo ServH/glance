@@ -1,3 +1,4 @@
+import { app } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -18,6 +19,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 function App() {
+  // Verify Firebase initialization (development only)
+  if (import.meta.env.DEV) {
+    console.warn('Firebase initialized:', app.name);
+  }
+
   return (
     <div className="min-h-screen p-8">
       <h1 className="text-4xl font-bold mb-8">shadcn/ui Component Test</h1>
